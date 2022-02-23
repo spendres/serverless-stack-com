@@ -218,13 +218,17 @@ Stack dev-websocket-my-stack
 
 The `ApiEndpoint` is the WebSocket API we just created. Let's test our endpoint.
 
-Head over to [**WebSocket Echo Test**](https://www.websocket.org/echo.html) to create a WebSocket client that'll connect to our API.
+Install wscat using, npm i -g wscat, and type the following command using the `ApiEndpoint` from your stack output:
 
-Enter the `ApiEndpoint` from above as the **Location** and hit **Connect**.
+wscat -c wss://{api-id}.execute-api.us-east-1.amazonaws.com/{stage}
 
-![Connect to serverless WebSocket API](/assets/examples/websocket/connect-to-serverless-websocket-api.png)
+You should see the lines:
 
-You should see `CONNECTED` being printed out in the **Log**.
+```
+Connected (press CTRL+C to quit)
+>
+```
+
 
 ## Sending messages
 
@@ -281,23 +285,18 @@ We are doing a couple of things here:
 
 Now let's do a complete test!
 
-Create another client by opening the [**WebSocket Echo Test**](https://www.websocket.org/echo.html) page in **a different browser window**. Just like before, paste the `ApiEndpoint` as the **Location** and hit **Connect**.
+Create another client by opening another terminal window and typing:
 
-![Connect to serverless WebSocket API again](/assets/examples/websocket/connect-to-serverless-websocket-api-again.png)
+wscat -c wss://{api-id}.execute-api.us-east-1.amazonaws.com/{stage} using the same `apiEndpoint` as before.
 
-Once connected, paste the following into the **Message** field and hit **Send**.
+
+Once connected, paste the following line into the `>` command prompt and hit enter.
 
 ```
 {"action":"sendmessage", "data":"Hello World"}
 ```
 
-![Send message to serverless WebSocket API](/assets/examples/websocket/send-message-to-serverless-websocket-api.png)
-
-You'll notice in the **Log** that it sends the message (`SENT:`) and receives it as well (`RECEIVED:`).
-
-Also, if you flip back to our original WebSocket client window, you'll notice that the message was received there as well!
-
-![Receive message from serverless WebSocket API](/assets/examples/websocket/receive-message-from-serverless-websocket-api.png)
+If you flip back to our original WebSocket client window, you'll notice that the message was received there as well!
 
 
 ## Deploying to prod
